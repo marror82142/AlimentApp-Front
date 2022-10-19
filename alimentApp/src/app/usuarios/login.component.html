@@ -1,0 +1,35 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <div class="text-black" style="background-color: white" *ngIf="!usuarioActual">
+        <div class="card-body"></div>
+        <img src="assets/logo alimentapp.png"/>
+        <form (ngSubmit) = "login()" class="center">
+          <div class="form-group row center">
+            <label for="nombreUsuario" class="col-form-label col-sm-2">Nombre de usuario</label>
+            <div class="col-sm-6 my-2">
+              <input type="text" class="form-control" [(ngModel)]="usuario.nombreUsuario" name="nombreUsuario" required="true">
+            </div>
+          </div>
+          <div class="form-group row center">
+            <label for="contrasena" class="col-form-label col-sm-2">Contrasena</label>
+            <div class="col-sm-6 my-2">
+              <input type="password" class="form-control" [(ngModel)]="usuario.contrasena" name="contrasena" required="true">
+            </div>
+          </div>
+          <div class="form-group row center">
+            <div class="col-sm-12 center my-2">
+              <button class="btn btn-primary " name="button">Iniciar Sesion</button>
+            </div>
+          </div>
+        </form>
+        <div class="col-sm-12 center my-2">
+          <button class="btn btn-link " name="button" (click)="router.navigate(['/usuarios']);">Aun no estas registrado? Clic aqui</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-2"></div>
+  </div>
+</div>
