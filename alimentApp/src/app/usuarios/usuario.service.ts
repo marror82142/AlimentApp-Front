@@ -27,7 +27,13 @@ export class usuarioService {
     return this.http.get<usuario>(request);
   }
 
+  recuperarContrasena(correo: string): Observable<usuario>{
+    let request = this.endpointUrl+ '/recuperar' + '?correo=' + correo;
+    return this.http.get<usuario>(request);
+  }
+
   create(usuario: usuario): Observable<usuario>{
+    usuario.rol = "Usuario"
     return this.http.post<usuario>(this.endpointUrl, usuario, {headers: this.httpHeaders});
   }
   
@@ -38,5 +44,6 @@ export class usuarioService {
   delete(cedula: number): Observable<usuario>{
     return this.http.delete<usuario>(`${this.endpointUrl}/${cedula}`, {headers: this.httpHeaders})
   }
-  
+
 }
+

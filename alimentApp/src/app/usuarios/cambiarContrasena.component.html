@@ -1,0 +1,73 @@
+<app-header></app-header>
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="card mb-3">
+            <div class="text-black" style="background-color: white;">
+                <div class="card-header">{{title}}</div>
+                <div class="card-body"></div>
+                <form (ngSubmit)="cambiarContrasena()" class="center">                    
+                    <div class="form-group row center" *ngIf="!usuarioEditar">
+                        <label for="contrasena" class="col-form-label col-sm-2">Nueva Contrasena</label>
+                        <div class="col-sm-6 my-2">
+                            <input type="password" class="form-control" [(ngModel)]="contrasena"
+                                name="contrasena" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group row center" *ngIf="!usuarioEditar">
+                        <label for="contrasenaAconfirmar" class="col-form-label col-sm-2">Confirmar Contrasena</label>
+                        <div class="col-sm-6 my-2">
+                            <input type="password" class="form-control" [(ngModel)]="contrasenaAconfirmar"
+                                name="contrasenaAconfirmar" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group row center">
+                        <div class="col-sm-12 center my-2">
+                            <button class="btn btn-primary " *ngIf="!usuarioEditar" name="button">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card-body text-primary" style="background-color: #196844;" *ngIf="usuarioActual">
+                <div class="card-body text-primary" style="background-color: #196844;"
+                    *ngIf="usuarioActual.rol === 'Admin'">
+                    <h5 class="card-title" style="color: white;">Usuarios</h5>
+
+                    <table class="table table-striped" style="color: white;">
+                        <thead>
+                            <tr>
+                                <th>Cedula</th>
+                                <th>Nombre</th>
+                                <th>Fecha Nacimiento</th>
+                                <th>Correo Personal</th>
+                                <th>Direccion</th>
+                                <th>Telefono</th>
+                                <th>Nombre Usuario</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody style="color: white;">
+                            <tr *ngFor="let item of usuarios">
+                                <td style="color: white;">{{ item.cedula }}</td>
+                                <td style="color: white;">{{ item.nombre }} </td>
+                                <td style="color: white;">{{ item.fechaNacimiento }}</td>
+                                <td style="color: white;">{{ item.infoContacto.correoPersonal }}</td>
+                                <td style="color: white;">{{ item.infoContacto.direccion }}</td>
+                                <td style="color: white;">{{ item.infoContacto.telefono }}</td>
+                                <td style="color: white;">{{ item.nombreUsuario }}</td>
+                                <td>
+                                    <button type="button" name="edit" (click)='edit(item)'
+                                        class="btn btn-primary btn-sm"><span class="bi bi-pencil">Editar</span></button>
+                                    <button type="button" name="delete" (click)='delete(item)'
+                                        class="btn btn-danger btn-sm"><span class="bi bi-trash">Borrar</span></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-2"></div>
+</div>

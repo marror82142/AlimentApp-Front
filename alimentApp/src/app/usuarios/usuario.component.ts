@@ -5,6 +5,7 @@ import swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { contacto } from './contacto';
+import { donacion } from '../donacion/donacion';
 
 @Component({
   selector: 'app-usuarios',
@@ -17,6 +18,8 @@ export class usuarioComponent implements OnInit {
   public infoContacto: contacto = new contacto();
   public usuario: usuario = new usuario;
   public usuarioEditar: usuario = null;
+  public donacion: donacion = new donacion;
+  public contrasenaAconfirmar:string="";
 
   public title = "Registro";
   constructor(private usuarioService: usuarioService,
@@ -72,27 +75,47 @@ export class usuarioComponent implements OnInit {
 
   public create(): void{  
     if(this.usuarioEditar!=null){
-      if(!moment(this.usuarioEditar.fechaNacimiento, 'YYYY-MM-DD',true).isValid()){
-        swal.fire("Formato de fecha incorrecto.");
+      let anoNacimiento = new Date(this.usuarioEditar.fechaNacimiento).getFullYear()
+      let anoActual = new Date().getFullYear()
+      if(anoActual-anoNacimiento < 18){
+        swal.fire('Error', `Debes ser mayor de edad`, 'error')
       }else{
         this.update();
       }
     }else{
-      if(!moment(this.usuario.fechaNacimiento, 'YYYY-MM-DD',true).isValid()){
-        swal.fire("Formato de fecha incorrecto.");
-      }else{
-        this.usuario.infoContacto = this.infoContacto
-        this.usuarioService.create(this.usuario)
-        .subscribe(usuario => {               
-          this.usuarioService.getUsuarios().subscribe(
-            usuarios => this.usuarios = usuarios
-          );
-          this.router.navigate(['/usuarios'])
-          swal.fire('Nuevo usuario', `usuario ${usuario.nombreUsuario} creado`, 'success')
+      this.usuarioService.getUsuario(this.usuario.cedula).subscribe( (usuario) => {
+        if(usuario != null){
+          swal.fire('Error', `El usuario ya ha sido creado`, 'error')
+        }else{    
+          let anoNacimiento = new Date(this.usuario.fechaNacimiento).getFullYear()
+          let anoActual = new Date().getFullYear()
+          if(anoActual-anoNacimiento < 18){
+            swal.fire('Error', `Debes ser mayor de edad`, 'error')
+          }else{
+            if(this.confirmarContrasena(this.usuario.contrasena, this.contrasenaAconfirmar)){
+              this.usuario.infoContacto = this.infoContacto
+              this.usuarioService.create(this.usuario)
+              .subscribe(usuario => {               
+                this.usuarioService.getUsuarios().subscribe(
+                  usuarios => this.usuarios = usuarios
+                );
+                this.router.navigate(['/login'])
+                swal.fire('Nuevo usuario', `usuario ${usuario.nombreUsuario} creado`, 'success')
+              });  
+            }else{
+              swal.fire('Error', `Las contrasenas deben coincidir`, 'error')
+            } 
+          }
         }
-        );   
-      }
+      })      
     }
+  }
+
+  public confirmarContrasena(contrasena:string, contrasenaAConfirmar:string): boolean{
+    if(contrasena === contrasenaAConfirmar){
+      return true;
+    }
+    return false;
   }
 
   update():void{

@@ -26,13 +26,10 @@
                         </div>
                     </div>
                     <div class="form-group row center">
-                        <label for="fechaNacimiento" class="col-form-label col-sm-2">Fecha Nacimiento
-                            (YYYY-MM-DD)</label>
+                        <label for="fechaNacimiento" class="col-form-label col-sm-2">Fecha Nacimiento</label>
                         <div class="col-sm-6 my-2">
-                            <input type="text" class="form-control" *ngIf="!usuarioEditar"
-                                [(ngModel)]="usuario.fechaNacimiento" name="fechaNacimiento" required="true">
-                            <input type="text" class="form-control" *ngIf="usuarioEditar"
-                                [(ngModel)]="usuarioEditar.fechaNacimiento" name="fechaNacimiento" required="true">
+                            <input type="date" class="form-control" *ngIf="!usuarioEditar" [(ngModel)]="usuario.fechaNacimiento" name="fechaNacimiento" required="true">
+                            <input type="date" class="form-control" *ngIf="usuarioEditar" [(ngModel)]="usuarioEditar.fechaNacimiento" name="fechaNacimiento" required="true">
                         </div>
                     </div>
                     <div class="form-group row center">
@@ -108,6 +105,13 @@
                         <div class="col-sm-6 my-2">
                             <input type="password" class="form-control" [(ngModel)]="usuario.contrasena"
                                 name="contrasena" required="true">
+                        </div>
+                    </div>
+                    <div class="form-group row center" *ngIf="!usuarioEditar">
+                        <label for="contrasenaAconfirmar" class="col-form-label col-sm-2">Confirmar Contrasena</label>
+                        <div class="col-sm-6 my-2">
+                            <input type="password" class="form-control" [(ngModel)]="contrasenaAconfirmar"
+                                name="contrasenaAconfirmar" required="true">
                         </div>
                     </div>
                     <div class="form-group row center">

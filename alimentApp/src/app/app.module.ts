@@ -9,13 +9,22 @@ import { usuarioService } from './usuarios/usuario.service';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './usuarios/login.component';
+import { LoginComponent } from './usuarios/login/login.component';
+import { donacionComponent } from './donacion/donacion.component';
+import { donacionService } from './donacion/donacion.service';
+import { RecuperarComponent } from './usuarios/login/recuperar.component';
+import { ConfirmarRecuperarComponent } from './usuarios/login/confirmarRecuperar.component';
+import { CambiarContrasenaComponent } from './usuarios/cambiarContrasena.component';
+
 
 const routes: Routes = [
   {path: '', component: LoginComponent, pathMatch:'full'},
   {path: 'login', component: LoginComponent},
-  {path: 'usuarios', component: usuarioComponent}
-  
+  {path: 'usuarios', component: usuarioComponent},
+  {path: 'donacion', component: donacionComponent},
+  {path: 'recuperarContrasena', component: RecuperarComponent},
+  {path: 'confirmarRecuperacion', component: ConfirmarRecuperarComponent},
+  {path: 'cambiarContrasena', component: CambiarContrasenaComponent}  
 ]
 
 @NgModule({
@@ -24,7 +33,11 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent,
     usuarioComponent,
-    LoginComponent
+    donacionComponent,
+    LoginComponent,
+    RecuperarComponent,
+    ConfirmarRecuperarComponent,
+    CambiarContrasenaComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +46,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [usuarioService],
+  providers: [usuarioService, donacionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

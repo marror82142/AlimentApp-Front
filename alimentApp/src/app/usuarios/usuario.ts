@@ -7,5 +7,6 @@ export class usuario {
   nombreUsuario: string;
   contrasena: string;
   fechaNacimiento: string;
+  codigoRecuperacion: number;
   infoContacto: contacto;
 }
